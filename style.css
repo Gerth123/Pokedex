@@ -1,9 +1,42 @@
 body {
     margin: 0;
+    background-color: rgb(255,255,255);
 }
 
 #pokedex {
     min-height: 50vh;
-    background-color: rgb(219, 33, 33);
+    background-color: rgb(255,255,255);
     color: white;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.infoContainer {
+    background-color: white;
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
+    margin-top: -40px;
+    min-height: 100px;
+}
+
+.wholePokemonsContainer{
+    flex-wrap: wrap;
+}
+
+.soloPokemonContainer {
+    height: 40vh;
+    width: 400px;
+    background-color: green;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    padding: 10px 30px;
+}
+
+.soloPokemonHeadlineContainer {
+    display: flex;
+    justify-content: space-around;
+    font-size: 30px;
 }
