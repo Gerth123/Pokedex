@@ -1,21 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="script.js"></script>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body onload="choosePokemon()">
-    <h1>Pokedex</h1>
-    <div id="pokedex">
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body onload="choosePokemon()">
+    <div class="wholePokedexContainer">
+      <div class="headlineAndPokeballPictureContainer">
+        <h1>Pokedex</h1>
+        <img src="img pokedex/pokeball1.png" alt="pokeball" class="pokeball" />
+      </div>
+      <div id="pokedex"></div>
     </div>
 
     <div class="infoContainer">
-        <img id="pokemonImage" src="" alt="">
+      <img id="pokemonImage" src="" alt="" />
     </div>
-    <!-- mit JS um id einzeln zu vergeben -->
-</body>
+  </body>
 </html>

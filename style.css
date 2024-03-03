@@ -10,6 +10,30 @@ body {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.headlineAndPokeballPictureContainer {
+    display: flex;
+    justify-content: center;
+    flex-direction: row-reverse;
+    align-items: center;
+    padding: 50px 0px;
+    gap: 50px;
+}
+
+h1 {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.pokeball {
+    height: 15vh;
+}
+
+.wholePokedexContainer {
+    margin: 0px 70px;
 }
 
 .infoContainer {
@@ -26,8 +50,8 @@ body {
 
 .soloPokemonContainer {
     height: 40vh;
-    width: 400px;
-    background-color: green;
+    width: 300px;
+    background-color: rgb(44,218,177);
     border-top-left-radius: 30px;
     border-top-right-radius: 30px;
     border-bottom-left-radius: 30px;
@@ -35,8 +59,37 @@ body {
     padding: 10px 30px;
 }
 
+.soloPokemonContainer:hover {
+    cursor: pointer;
+    /* zoom: 1.015;
+    margin: -5px -5px; */
+    transform: scale(1.05);
+}
+
 .soloPokemonHeadlineContainer {
     display: flex;
     justify-content: space-around;
     font-size: 30px;
 }
+
+.numberOfSinglePokemon {
+    color: rgb(38,189,153);
+}
+
+.pokemonImageAndTypeContainer {
+    display: flex;
+    flex-direction: row-reverse;
+    width: 100%;
+    justify-content: space-around;
+}
+
+.pokemonImage {
+    height: 30vh;
+}
+
+.pokemonType {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
