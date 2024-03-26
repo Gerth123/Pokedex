@@ -50,31 +50,31 @@ async function choosePokemon() {
     for (let pokemonsIndex = 0; pokemonsIndex < pokemons.length; pokemonsIndex++) {
         const actualPokemon = pokemons[pokemonsIndex];
         let actualUrl = url + actualPokemon;
-        debugger
         let pokemonNumber = String(pokemonsIndex + 1).padStart(3, '0');
         await loadPokemon(actualUrl);
         await capitalizeFirstLetter(actualPokemon, pokemonsIndex);
         await includeTypes(actualUrl, pokemonsIndex);
        
         document.getElementById('pokedex').innerHTML += `
-        <div class="soloPokemonContainer" id="soloPokemonContainer${pokemonsIndex}" onclick="openPokemonInfo(${pokemonsIndex})" style="background-color: rgb(247,120,107)">
+        <div class="soloPokemonContainer" id="soloPokemonContainer${pokemonsIndex}" onclick="openPokemonInfo(${pokemonsIndex}, '${actualUrl}', '${pokemonNumber}')" style="background-color: rgb(247,120,107)">
         <div class="soloPokemonHeadlineContainer">
         <span> ${actualPokemonUsed} </span> <span class="numberOfSinglePokemon">#${pokemonNumber}</span>
         </div>
         <div class="pokemonImageAndTypeContainer">
         <img class="pokemonImage" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemonsIndex + 1}.svg">
-        <div class="pokemonType"><div class="typeBackgroundColor">${actualTypes[0]}</div><div class="typeBackgroundColorTwo" id="typeBackgroundColorTwo${pokemonsIndex}">${setSecondActualType(pokemonsIndex)}</div></div>
+        <div class="pokemonType"><div class="typeBackgroundColor">${actualTypes[0]}</div><div class="typeBackgroundColorTwo" id="typeBackgroundColorTwo${pokemonsIndex}">${setSecondActualType()}</div></div>
         </div>
         </div>` ;
 
+        await checkSecondActualType(pokemonsIndex);
         await colorOfType(pokemonsIndex);
-        actualTypes.splice(0, 2)
+        actualTypes.splice(0, 2);
         // loadPokemon(actualUrl);
         // renderPokemonInfo(pokemonsIndex, actualUrl);
     }
 }
 
-async function includeTypes(actualUrl, pokemonsIndex) {
+async function includeTypes(actualUrl) {
     let response = await fetch(actualUrl);
     let responseAsJson = await response.json();
     for (let typeIndex = 0; typeIndex < responseAsJson['types'].length; typeIndex++) {
@@ -89,13 +89,17 @@ async function includeTypes(actualUrl, pokemonsIndex) {
 
 }
 
-function setSecondActualType(pokemonsIndex) {
-    if (actualTypes[1] !== '') {
+function setSecondActualType() {
+    if (actualTypes.length == 2) {
         return actualTypes[1];
-    } else {
+    }
+}
+
+function checkSecondActualType(pokemonsIndex) { 
+   if (actualTypes.length !== 2) {
         let actualIdSecondTypeBackground = 'typeBackgroundColorTwo' + pokemonsIndex;
         document.getElementById(actualIdSecondTypeBackground).classList.add('d-none');
-    }
+   } 
 }
 
 function colorOfType(pokemonsIndex) {
@@ -107,6 +111,7 @@ function colorOfType(pokemonsIndex) {
         soloPokemonContainer.style.backgroundColor = backgroundColor;
     }
 }
+
 
 function capitalizeFirstLetter(actualPokemon, pokemonsIndex) {
     if (actualPokemon == 'mr-mime') {
@@ -132,5 +137,76 @@ function renderPokemonInfo(pokemonsIndex) {
 
 }
 
-//for Schleife für jedes einzelne Pokemon mit komplettem Datenpaket
-//Backgroundcolor anhand Spezies, bereits im Link vorhanden?
+
+async function openPokemonInfo (pokemonsIndex, actualUrl, pokemonNumber) {
+    let body = document.getElementById('body');
+    body.innerHTML += '';
+    await body.classList.remove('d-none');
+
+    let actualPokemon = pokemons[pokemonsIndex];
+    let firstLetter = actualPokemon.charAt(0);
+    let remainingLetters = actualPokemon.substring(1);
+    let firstLetterCapitalized = firstLetter.toUpperCase();
+    let actualPokemonCapitalized = firstLetterCapitalized + remainingLetters;
+
+    await includeTypes(actualUrl);
+
+    
+    body.innerHTML += `
+    <div class="pokemonInfoContainerAndBorder" id="soloPokemonContainerBig" onclick="closePokemonInfo(${pokemonsIndex})">
+        <div class="pokemonInfoContainer">
+            <div class="pokemonInfoHeadlineContainer"> 
+                <div class="pokemonInfoHeadlineAndNumberContainer">
+                <h2 class="pokemonInfoHeadline">${actualPokemonCapitalized}</h2><span class="numberOfPokemonInfo">#${pokemonNumber}</span>
+                </div>
+                <span class="pokemonInfoTypeContainer"><div class="pokemonInfoTypeBackgroundColor">${actualTypes[0]}</div><div class="pokemonInfoTypeBackgroundColorTwo" id="typeBackgroundColorTwo${pokemonsIndex}">${setSecondActualType()}</div></span>
+                </div>
+            <div class="pokemonInfoPokemonImageContainer">
+                <img class="pokemonInfoPokemonImage" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemonsIndex + 1}.svg">
+            </div>
+            <div class="pokemonInfoBottomContainer">
+            </div>    
+        </div> 
+    </div>
+   
+    `;
+    await checkSecondActualType(pokemonsIndex);
+}
+
+async function closePokemonInfo(pokemonsIndex) {
+
+    let pokemonInfoContainerAndBorder = document.getElementById('soloPokemonContainerBig');
+    let body = document.getElementById('body');
+    let selectedBody =  body.querySelector('soloPokemonContainerBig');
+    body.innerHTML += '';
+    body.classList.add('d-none');
+    let actualSoloPokemonContainer = 'soloPokemonContainer' + pokemonsIndex;
+    let actualPokemonContainer = document.getElementById(actualSoloPokemonContainer);
+    actualPokemonContainer.classList.remove('d-none');
+
+}
+
+
+
+
+// document.getElementById('teilbereich').addEventListener('click', function(event) {
+//     event.stopPropagation(); // Verhindert, dass das Klickereignis auf den Teilbereich weitergeleitet wird
+// });
+
+// function entferneText() {
+//     var element = document.getElementById('meineDiv');
+//     var textElement = element.querySelector('p'); // Selektieren Sie das gewünschte Textelement, z.B. ein <p> Element.
+    
+//     if (textElement) { // Überprüfen Sie, ob das Element existiert, bevor Sie es entfernen.
+//         element.removeChild(textElement); // Entfernen Sie das Textelement aus der Div.
+//     }
+// }
+
+
+// <div id="meineDiv">
+//     <div id="teilbereich">
+//         <p>Dies ist der Teilbereich, der nicht reagieren und nicht gelöscht werden soll.</p>
+//     </div>
+//     <p>Dies ist der Text, den Sie entfernen möchten.</p>
+//     <button onclick="entferneText()">Text entfernen</button>
+// </div>
