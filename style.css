@@ -136,7 +136,7 @@ h1 {
     flex-direction: column;
     position: fixed;
     justify-content: center;
-    color: rgb(222, 217, 217);
+    color: rgb(255, 255, 255);
     height: 100vh;
     width: 100%;
     padding-top: 0;
@@ -231,7 +231,7 @@ h1 {
 }
 
 .pokemonInfoBottomContainer {
-    height: 50vh;
+    height: 51vh;
     background-color: rgb(222, 217, 217) !important;
     border-top-left-radius: 40px;
     border-top-right-radius: 40px;
