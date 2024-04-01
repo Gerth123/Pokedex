@@ -33,6 +33,8 @@ let actualPokemonImgUrl = [];
 
 let actualTypes = [];
 
+let pokemonsIndexBig = [];
+
 async function loadPokemon(actualUrl) {
     let response = await fetch(actualUrl);
     let responseAsJson = await response.json();
@@ -129,14 +131,25 @@ function capitalizeFirstLetter(actualPokemon) {
         let mrMimeCapitalized = 'Mr. Mime';
         actualPokemonUsed.splice(0, 1);
         actualPokemonUsed.push(mrMimeCapitalized);
-    } else {
+    } else { 
+    if (actualPokemon == 'nidoran-f'){
+        let nidoranFCapitalized = 'Nidoran Female';
+        actualPokemonUsed.splice(0, 1);
+        actualPokemonUsed.push(nidoranFCapitalized);
+    }  else {
+    if (actualPokemon == 'nidoran-m'){
+        let nidoranMCapitalized = 'Nidoran Male';
+        actualPokemonUsed.splice(0, 1);
+        actualPokemonUsed.push(nidoranMCapitalized);
+    }
+    else {
         let firstLetter = actualPokemon.charAt(0);
         let remainingLetters = actualPokemon.substring(1);
         let firstLetterCapitalized = firstLetter.toUpperCase();
         let actualPokemonCapitalized = firstLetterCapitalized + remainingLetters;
         actualPokemonUsed.splice(0, 1);
         actualPokemonUsed.push(actualPokemonCapitalized);
-    }
+    } } }
 }
 
 function renderPokemonInfo(pokemonsIndex) {
@@ -159,7 +172,7 @@ async function openPokemonInfo (pokemonsIndex, actualUrl, pokemonNumber) {
     await includeTypes(actualUrl);
 
     
-    body.innerHTML += `
+    body.innerHTML = `
     <div class="pokemonInfoContainerAndBorder" id="pokemonInfoContainerAndBorder">
         <div class="pokemonInfoContainer"  onclick="dontClose(event)" id="pokemonInfoContainer${pokemonsIndex}">
             <div class="pokemonInfoHeadlineContainer"> 
@@ -179,11 +192,11 @@ async function openPokemonInfo (pokemonsIndex, actualUrl, pokemonNumber) {
     await checkSecondActualType(pokemonsIndex);
     await colorOfType2(pokemonsIndex);
     actualTypes.splice(0, 2);
+    pokemonsIndexBig.push(pokemonsIndex);
 }
 
 async function closePokemonInfo() {
     let body = document.getElementById('body');
-    body.innerHTML += '';
     body.classList.add('d-none');
 }
 
