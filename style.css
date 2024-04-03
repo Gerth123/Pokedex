@@ -232,9 +232,79 @@ h1 {
 }
 
 .pokemonInfoBottomContainer {
-    height: 51vh;
+    height: 40vh;
+    padding-top: 70px;
     background-color: rgb(222, 217, 217) !important;
     border-top-left-radius: 40px;
     border-top-right-radius: 40px;
     border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    color: black;
+}
+
+.pokemonInfoBottomHeadlineContainer {
+    display: flex;
+    justify-content: space-around;
+}
+
+.pokemonInfoBottomAbout {
+    color: black;
+    text-decoration-line: underline;
+    text-decoration-color: rgb(44,218,177);
+    text-underline-offset: 10px;
+}
+
+.pokemonInfoBottomAbout:hover {
+    cursor: pointer;
+    color: black;
+}
+
+.pokemonInfoBottomBaseStats {
+    color: rgba(137, 128, 128, 0.4);
+}
+
+.pokemonInfoBottomBaseStats:hover {
+    cursor: pointer;
+    color: black;
+}
+
+.pokemonInfoBottomEvolution {
+    color: rgba(137, 128, 128, 0.4);
+}
+
+.pokemonInfoBottomEvolution:hover {
+    cursor: pointer;
+    color: black;
+}
+
+.pokemonInfoBottomMoves {
+    color: rgba(137, 128, 128, 0.4);
+}
+
+.pokemonInfoBottomMoves:hover {
+    cursor: pointer;
+    color: black;
+}
+
+.integratedElementsAndTypesInfoBottomContainer {
+    display: flex;
+    justify-content: space-around;
+    width: 50%;
+    align-items: center;
+    height: 25vh;
+}
+
+.typesForIntegratedElementsBottomContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 10px;
+}
+
+.integratedElementsInfoBottomContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }

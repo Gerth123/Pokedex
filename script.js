@@ -40,6 +40,8 @@ async function loadPokemon(actualUrl) {
     let responseAsJson = await response.json();
     let actualImgUrl = responseAsJson['sprites']['front_shiny'];
     actualPokemonImgUrl.push(actualImgUrl);
+
+    console.log(responseAsJson);
 }
 
 async function loadPokemonDates(responseAsJson) {
@@ -168,9 +170,9 @@ async function openPokemonInfo (pokemonsIndex, actualUrl, pokemonNumber) {
     let remainingLetters = actualPokemon.substring(1);
     let firstLetterCapitalized = firstLetter.toUpperCase();
     let actualPokemonCapitalized = firstLetterCapitalized + remainingLetters;
-
+    let response = await fetch(actualUrl);
+    let responseAsJson = await response.json();
     await includeTypes(actualUrl);
-
     
     body.innerHTML = `
     <div class="pokemonInfoContainerAndBorder" id="pokemonInfoContainerAndBorder">
@@ -184,7 +186,25 @@ async function openPokemonInfo (pokemonsIndex, actualUrl, pokemonNumber) {
             <div class="pokemonInfoPokemonImageContainer">
                 <img class="pokemonInfoPokemonImage" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemonsIndex + 1}.svg">
             </div>
-            <div class="pokemonInfoBottomContainer">
+            <div class="pokemonInfoBottomContainer" id="pokemonInfoBottomContainer">
+                <div class="pokemonInfoBottomHeadlineContainer">
+                    <span class="pokemonInfoBottomAbout">About</span>
+                    <span class="pokemonInfoBottomBaseStats">Base Stats</span>
+                    <span class="pokemonInfoBottomEvolution">Evolution</span>
+                    <span class="pokemonInfoBottomMoves">Moves</span>
+                </div>
+                <div class="integratedElementsAndTypesInfoBottomContainer">
+                    <div class="typesForIntegratedElementsBottomContainer">
+                        <span>Height:</span>
+                        <span>Weight:</span>
+                        <span>Abilities:</span>
+                    </div>
+                    <div class="integratedElementsInfoBottomContainer">
+                        <span>${responseAsJson['height']} Inches</span>
+                        <span>${responseAsJson['weight']} Kilogramm</span>
+                        <span>${responseAsJson['abilities']['0']['ability']['name']}</span>
+                    </div>
+                </div>
             </div>    
         </div> 
     </div>
