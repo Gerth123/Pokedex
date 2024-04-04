@@ -193,16 +193,35 @@ async function openPokemonInfo (pokemonsIndex, actualUrl, pokemonNumber) {
                     <span class="pokemonInfoBottomEvolution">Evolution</span>
                     <span class="pokemonInfoBottomMoves">Moves</span>
                 </div>
-                <div class="integratedElementsAndTypesInfoBottomContainer">
-                    <div class="typesForIntegratedElementsBottomContainer">
-                        <span>Height:</span>
-                        <span>Weight:</span>
-                        <span>Abilities:</span>
+                <div class="wholeIntegratedElementsAndTypesInfoBottomContainer">
+                    <div class="integratedElementsAndTypesInfoBottomContainer">
+                        <div class="typesForIntegratedElementsBottomContainer">
+                            <span>Species</span>
+                            <span>Height:</span>
+                            <span>Weight:</span>
+                            <span>Abilities:</span>
+                        </div>
+                        <div class="integratedElementsInfoBottomContainer">
+                            <span>Whatever</span>
+                            <span>${responseAsJson['height']} Inches</span>
+                            <span>${responseAsJson['weight']} Kilogramm</span>
+                            <span>${responseAsJson['abilities']['0']['ability']['name']}</span>
+                        </div>
                     </div>
-                    <div class="integratedElementsInfoBottomContainer">
-                        <span>${responseAsJson['height']} Inches</span>
-                        <span>${responseAsJson['weight']} Kilogramm</span>
-                        <span>${responseAsJson['abilities']['0']['ability']['name']}</span>
+                    <div class="secondIntegratedElementsAndTypesInfoBottomContainer">
+                        <h2 class="secondIntegratedElementsAndTypesInfoBottomHeadline">Breeding</h2>
+                        <div class="secondIntegratedElementsAndTypesInfoBottom">    
+                            <div class="typesForIntegratedElementsBottomContainer">
+                                <span>Gender:</span>
+                                <span>Egg</span>
+                                <span>Eggcycle</span>
+                            </div>
+                            <div class="integratedElementsInfoBottomContainer"> 
+                                <span>Gender:</span>
+                                <span>Egg</span>
+                                <span>Eggcycle</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>    
