@@ -60,7 +60,7 @@ async function choosePokemon() {
         await capitalizeFirstLetter(actualPokemon);
         await includeTypes(actualUrl);
        
-        document.getElementById('pokedex').innerHTML += `
+        document.getElementById('pokedex').innerHTML += /*html*/`
         <div class="soloPokemonContainer" id="soloPokemonContainer${pokemonsIndex}" onclick="openPokemonInfo(${pokemonsIndex}, '${actualUrl}', '${pokemonNumber}')" style="background-color: rgb(247,120,107)">
         <div class="soloPokemonHeadlineContainer">
         <span> ${actualPokemonUsed} </span> <span class="numberOfSinglePokemon">#${pokemonNumber}</span>
@@ -173,8 +173,9 @@ async function openPokemonInfo (pokemonsIndex, actualUrl, pokemonNumber) {
     let response = await fetch(actualUrl);
     let responseAsJson = await response.json();
     await includeTypes(actualUrl);
+    await capitalizeFirstLetter(actualPokemon);
     
-    body.innerHTML = `
+    body.innerHTML = /*html*/`
     <div class="pokemonInfoContainerAndBorder" id="pokemonInfoContainerAndBorder">
         <div class="pokemonInfoContainer"  onclick="dontClose(event)" id="pokemonInfoContainer${pokemonsIndex}">
             <div class="pokemonInfoHeadlineContainer"> 
@@ -188,7 +189,7 @@ async function openPokemonInfo (pokemonsIndex, actualUrl, pokemonNumber) {
             </div>
             <div class="pokemonInfoBottomContainer" id="pokemonInfoBottomContainer">
                 <div class="pokemonInfoBottomHeadlineContainer">
-                    <span class="pokemonInfoBottomAbout">About</span>
+                    <span class="pokemonInfoBottomAbout" id="pokemonInfoBottomAbout${pokemonsIndex}">About</span>
                     <span class="pokemonInfoBottomBaseStats">Base Stats</span>
                     <span class="pokemonInfoBottomEvolution">Evolution</span>
                     <span class="pokemonInfoBottomMoves">Moves</span>
@@ -208,6 +209,7 @@ async function openPokemonInfo (pokemonsIndex, actualUrl, pokemonNumber) {
                             <span>${responseAsJson['abilities']['0']['ability']['name']}</span>
                         </div>
                     </div>
+                    <div class="separationLine" id="separationLine${pokemonsIndex}"></div>
                     <div class="secondIntegratedElementsAndTypesInfoBottomContainer">
                         <h2 class="secondIntegratedElementsAndTypesInfoBottomHeadline">Breeding</h2>
                         <div class="secondIntegratedElementsAndTypesInfoBottom">    
@@ -230,6 +232,7 @@ async function openPokemonInfo (pokemonsIndex, actualUrl, pokemonNumber) {
     `;
     await checkSecondActualType(pokemonsIndex);
     await colorOfType2(pokemonsIndex);
+    await colorOfLine(pokemonsIndex);
     actualTypes.splice(0, 2);
     pokemonsIndexBig.push(pokemonsIndex);
 }
@@ -241,4 +244,17 @@ async function closePokemonInfo() {
 
 function dontClose(event) {
     event.stopPropagation();
-  }
+}
+
+function colorOfLine(pokemonsIndex) {
+    let actualSeparationLine = 'separationLine' + pokemonsIndex;
+    let separationLine = document.getElementById(actualSeparationLine);
+    let actualPokemonInfoBottomAbout = 'pokemonInfoBottomAbout' + pokemonsIndex;
+    let pokemonInfoBottomAbout = document.getElementById(actualPokemonInfoBottomAbout);
+
+    let backgroundColor = typeColors[actualTypes[0]];
+    if (backgroundColor) {
+        separationLine.style.backgroundColor = backgroundColor;
+        pokemonInfoBottomAbout.style.textDecorationColor = backgroundColor;
+    }
+}
