@@ -149,7 +149,6 @@ h1 {
 }
 
 .pokemonInfoContainer {
-    height: 90vh;
     width: 90%;
     background-color: rgb(35, 164, 164);
     position: sticky;
@@ -197,6 +196,7 @@ h1 {
     display: flex;
     justify-content: center;
     margin-bottom: 10px;
+    color: white;
 }
 
 .pokemonInfoTypeBackgroundColorTwo {
@@ -232,7 +232,7 @@ h1 {
 }
 
 .pokemonInfoBottomContainer {
-    height: 40vh;
+    height: 42.5vh;
     padding-top: 70px;
     background-color: rgb(222, 217, 217) !important;
     border-top-left-radius: 40px;
@@ -250,41 +250,62 @@ h1 {
 }
 
 .pokemonInfoBottomAbout {
-    color: black;
-    text-decoration-line: underline;
-    text-decoration-color: rgb(44,218,177);
-    text-underline-offset: 10px;
+    color: rgba(137, 128, 128, 0.4);
+    font-size: large;
 }
 
 .pokemonInfoBottomAbout:hover {
     cursor: pointer;
     color: black;
+    text-decoration-line: underline;
+    text-decoration-color: rgb(79, 64, 48);
+    text-underline-offset: 10px;
 }
 
 .pokemonInfoBottomBaseStats {
     color: rgba(137, 128, 128, 0.4);
+    font-size: large;
 }
 
 .pokemonInfoBottomBaseStats:hover {
     cursor: pointer;
     color: black;
+    text-decoration-line: underline;
+    text-decoration-color: rgb(79, 64, 48);
+    text-underline-offset: 10px;
 }
 
 .pokemonInfoBottomEvolution {
     color: rgba(137, 128, 128, 0.4);
+    font-size: large;
 }
 
 .pokemonInfoBottomEvolution:hover {
     cursor: pointer;
     color: black;
+    text-decoration-line: underline;
+    text-decoration-color: rgb(79, 64, 48);
+    text-underline-offset: 10px;
 }
 
 .pokemonInfoBottomMoves {
     color: rgba(137, 128, 128, 0.4);
+    font-size: large;
 }
 
 .pokemonInfoBottomMoves:hover {
     cursor: pointer;
+    color: black;
+    text-decoration-line: underline;
+    text-decoration-color: 
+    rgb(79, 64, 48);
+    text-underline-offset: 10px;
+}
+
+.pokemonInfoBottomOpened {
+    text-decoration-line: underline;
+    text-decoration-color: rgb(44,218,177);
+    text-underline-offset: 10px;
     color: black;
 }
 
@@ -295,7 +316,7 @@ h1 {
 
 .integratedElementsAndTypesInfoBottomContainer {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     width: 50%;
     align-items: center;
     height: 90%;
@@ -316,11 +337,12 @@ h1 {
     margin-block-start: 0em;
     margin-block-end: 0em;
     width: 15%;
+    font-size: 1.3em;
 }
 
 .secondIntegratedElementsAndTypesInfoBottom {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     height: 100%;
     width: 100%;
 }
