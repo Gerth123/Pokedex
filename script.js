@@ -48,13 +48,19 @@ let pokemonsIndexBig = [];
 
 let correctedWeight = [];
 
+
+
+let pokemonCount = {
+    'start': 0,
+    'end': 20,
+}
+
 async function loadPokemon(actualUrl) {
     let response = await fetch(actualUrl);
     let responseAsJson = await response.json();
     let actualImgUrl = responseAsJson['sprites']['front_shiny'];
     actualPokemonImgUrl.push(actualImgUrl);
-
-    console.log(responseAsJson);
+    // console.log(responseAsJson);
 }
 
 async function loadPokemonDates(responseAsJson) {
@@ -65,7 +71,8 @@ async function loadPokemonDates(responseAsJson) {
 }
 
 async function choosePokemon() {
-    for (let pokemonsIndex = 0; pokemonsIndex < pokemons.length; pokemonsIndex++) {
+    let pokedex = document.getElementById('pokedex');
+    for (let pokemonsIndex = pokemonCount['start']; pokemonsIndex < pokemonCount['end']; pokemonsIndex++) {
         const actualPokemon = pokemons[pokemonsIndex];
         let actualUrl = url + actualPokemon;
         let pokemonNumber = String(pokemonsIndex + 1).padStart(3, '0');
@@ -73,23 +80,33 @@ async function choosePokemon() {
         await capitalizeFirstLetter(actualPokemon);
         await includeTypes(actualUrl);
        
-        document.getElementById('pokedex').innerHTML += /*html*/`
+        pokedex.innerHTML += /*html*/`
         <div class="soloPokemonContainer" id="soloPokemonContainer${pokemonsIndex}" onclick="openPokemonInfo(${pokemonsIndex}, '${actualUrl}', '${pokemonNumber}')" style="background-color: rgb(247,120,107)">
         <div class="soloPokemonHeadlineContainer">
         <span> ${actualPokemonUsed} </span> <span class="numberOfSinglePokemon">#${pokemonNumber}</span>
         </div>
-        <div class="pokemonImageAndTypeContainer">
-        <img class="pokemonImage" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemonsIndex + 1}.svg">
+        <div class="pokemonImageAndTypeContainer">  
+        <img class="pokemonImage" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonsIndex + 1}.png">
         <div class="pokemonType"><div class="typeBackgroundColor">${actualTypes[0]}</div><div class="typeBackgroundColorTwo" id="typeBackgroundColorTwo${pokemonsIndex}">${setSecondActualType()}</div></div>
         </div>
         </div>` ;
-
+                                                                                                                        // 'dream-world   .svg'
         await checkSecondActualType(pokemonsIndex);
         await colorOfType(pokemonsIndex);
         actualTypes.splice(0, 2);
         // loadPokemon(actualUrl);
         // renderPokemonInfo(pokemonsIndex, actualUrl);
     }
+}
+
+function renderReloadAndLoad() {
+    let loadPokemonButtonId = 'loadPokemonButtonContainerId';
+    removeDisplayNoneUniversal(loadPokemonButtonId);
+    let reloadButton = 'reloadPokemon';
+    setDisplayNoneUniversal(reloadButton);
+    let pokedex = document.getElementById('pokedex');
+    pokedex.innerHTML = '';
+    choosePokemon();
 }
 
 async function includeTypes(actualUrl) {
@@ -173,12 +190,6 @@ function capitalizeFirstLetter(actualPokemon) {
         return actualPokemonCapitalized;
     } } }
 }
-
-function renderPokemonInfo(pokemonsIndex) {
-    document.getElementById('pokemonname').innerHTML = currentPokemon['name'];
-    document.getElementById('pokemonnumber').innerHTML = `# ${pokemonsIndex}`;
-}
-
 
 async function openPokemonInfo (pokemonsIndex, actualUrl, pokemonNumber) {
     // let audio = new Audio(`https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/'${pokemonsIndex}.ogg`);
@@ -280,6 +291,16 @@ function capitalizeFirstLetterUniversal(value){
     let firstLetterCapitalized = firstLetter.toUpperCase();
     let actualValue = firstLetterCapitalized + remainingLetters;
     return actualValue;
+}
+
+function setDisplayNoneUniversal(value) {
+    let newValue = document.getElementById(value);
+    newValue.classList.add('d-none');
+}
+
+function removeDisplayNoneUniversal(value) {
+    let newValue = document.getElementById(value);
+    newValue.classList.remove('d-none');
 }
 
 async function closePokemonInfo() {
@@ -384,3 +405,98 @@ function removeBottomOpened(pokemonsIndex) {
         }
     }
 }
+
+async function showMorePokemon() {
+    
+    if (pokemonCount['start'] !== 140) {
+        pokemonCount['start'] += 20;
+        pokemonCount['end'] += 20;
+    } else {
+        pokemonCount['start'] += 20;
+        pokemonCount['end'] += 11;
+    }
+    if (pokemonCount['end'] == 151) {
+        let showMorePokemonButton = document.getElementById('showMorePokemonButton');
+        showMorePokemonButton.classList.add('d-none'); 
+    }
+    await setTimeout(choosePokemon(), 2000);
+}
+
+async function searchPokemon(){
+    let searchedPokemon = document.getElementById('pokemonSearchField').value.toLowerCase();
+    let searchedPokemonString = String(searchedPokemon);
+    let pokemonsIndex = pokemons.indexOf(searchedPokemonString);
+    let pokemonNumber = String(pokemonsIndex + 1).padStart(3, '0');
+    let actualUrl = url + pokemons[pokemonsIndex];
+    let response = await fetch(actualUrl);
+    let responseAsJson = await response.json();
+
+    if(pokemonsIndex >= 0) {
+        let firstActualType = setFirstActualTypeSearch(responseAsJson);
+        let actualId = 'soloPokemonContainerSearch' + pokemonsIndex;
+        const actualPokemon = pokemons[pokemonsIndex];
+        let pokedex = document.getElementById('pokedex');
+        pokedex.innerHTML = '';
+        pokedex.innerHTML += /*html*/`
+        <div class="soloPokemonContainerSearch" id='${actualId}' onclick="openPokemonInfo(${pokemonsIndex}, '${actualUrl}', '${pokemonNumber}')" style="background-color: rgb(247,120,107)">
+        <div class="soloPokemonHeadlineContainer">
+        <span> ${capitalizeFirstLetterUniversal(actualPokemon)} </span> <span class="numberOfSinglePokemon">#${pokemonNumber}</span>
+        </div>
+        <div class="pokemonImageAndTypeContainer">  
+        <img class="pokemonImage" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonsIndex + 1}.png">
+        <div class="pokemonType"><div class="typeBackgroundColor">${capitalizeFirstLetterUniversal(firstActualType)}</div><div class="typeBackgroundColorTwoSearch" id="typeBackgroundColorTwoSearch${pokemonsIndex}">${setSecondActualTypeSearch(responseAsJson)}</div></div>
+        </div>
+        </div>` ; 
+        setRightBackgroundColorUniversal(firstActualType, actualId);
+        let loadPokemonButtonId = 'loadPokemonButtonContainerId';
+        setDisplayNoneUniversal(loadPokemonButtonId);
+        let reloadButton = 'reloadPokemon';
+        removeDisplayNoneUniversal(reloadButton);
+        checkSecondActualTypeSearch(pokemonsIndex, responseAsJson);
+        }
+        // else{
+        //     let pokedex = document.getElementById('pokedex');
+        // pokedex.innerHTML = '';
+        // pokedex.innerHTML += /*html*/`
+        // <h2>No Pokemon Found</h2>
+        // `
+        // let loadPokemonButtonId = 'loadPokemonButtonContainerId';
+        // setDisplayNoneUniversal(loadPokemonButtonId);
+        // let reloadButton = 'reloadPokemon';
+        // removeDisplayNoneUniversal(reloadButton);
+        // }
+    }
+
+    function setFirstActualTypeSearch(responseAsJson) {
+        let actualType = responseAsJson['types'][0]['type']['name'];
+        return actualType;
+    }
+
+    function setSecondActualTypeSearch(responseAsJson) {
+        let actualTypeSearch = responseAsJson['types'][0]['type']['name'];
+        if (actualTypeSearch.length == 2) {
+            let actualType = responseAsJson['types'][0]['type']['name'];
+            capitalizeFirstLetterUniversal(actualType);
+            return actualType;
+        } else {
+            let nothing = '';
+            return nothing;
+        }
+    }
+
+    function checkSecondActualTypeSearch(pokemonsIndex, responseAsJson) {
+        let actualTypeSearch = responseAsJson['types'][0]['type']['name'];
+        if (actualTypeSearch.length !== 2) {
+            let actualId = 'typeBackgroundColorTwoSearch' + pokemonsIndex;
+            setDisplayNoneUniversal(actualId);
+        } 
+    }
+
+    function setRightBackgroundColorUniversal(value, actualId) {
+        let newValue = capitalizeFirstLetterUniversal(value);
+        let backgroundColorSearch = typeColors[newValue];
+        let actualIdToUse = document.getElementById(actualId);
+        if (backgroundColorSearch) {
+            actualIdToUse.style.backgroundColor = backgroundColorSearch;
+        }
+    }

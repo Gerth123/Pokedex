@@ -9,18 +9,39 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body onload="choosePokemon()">
-    <div id="body" onclick="closePokemonInfo()" class="soloPokemonContainerBig d-none">
-    </div>
+    <div
+      id="body"
+      onclick="closePokemonInfo()"
+      class="soloPokemonContainerBig d-none"
+    ></div>
     <div class="wholePokedexContainer">
-      <div class="headlineAndPokeballPictureContainer">
-        <h1>Pokedex</h1>
-        <img src="img pokedex/pokeball1.png" alt="pokeball" class="pokeball" />
+      <div class="pokedexHeadlineAndSearchFieldContainer">
+        <div class="headlineAndPokeballPictureContainer">
+          <h1>Pokedex</h1>
+          <img src="img/pokeball1.png" alt="pokeball" class="pokeball" />
+        </div>
+        <form class="pokemonSearchFieldContainer" onsubmit="searchPokemon(); return false">
+          <input required type="search" min="1" max="10" class="pokemonSearchField" id="pokemonSearchField" placeholder="Pokemon..."> 
+          <button>Search</button>
+        </form>
       </div>
       <div id="pokedex"></div>
     </div>
 
     <div class="infoContainer">
       <img id="pokemonImage" src="" alt="" />
+    </div>
+    <div class="showMorePokemonButtonContainer" id="loadPokemonButtonContainerId">
+      <button
+        onclick="showMorePokemon()"
+        id="showMorePokemonButton"
+        class="showMorePokemonButton"
+      >
+        Load Pokemon
+      </button>
+    </div>
+    <div class="showMorePokemonButtonContainer">
+      <button onclick="renderReloadAndLoad()" class="reloadPokemonButton d-none" id="reloadPokemon">Reload</button>
     </div>
   </body>
 </html>
