@@ -100,6 +100,8 @@ async function choosePokemon() {
 }
 
 function renderReloadAndLoad() {
+    pokemonCount['start'] =  0;
+    pokemonCount['end'] = 20;
     let loadPokemonButtonId = 'loadPokemonButtonContainerId';
     removeDisplayNoneUniversal(loadPokemonButtonId);
     let reloadButton = 'reloadPokemon';
