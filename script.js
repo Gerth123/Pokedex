@@ -23,15 +23,6 @@ let typeColors = {
     'Ice': 'rgb(151, 217, 240)',
 };
 
-let pokemonInfoBottom = {
-    'About': true,
-    'BaseStats': false,
-    'Evolution': false,
-    'Moves': false,
-};
-
-let pokemonInfoBottomForLoop = ['pokemonInfoBottomAbout', 'pokemonInfoBottomBaseStats', 'pokemonInfoBottomEvolution', 'pokemonInfoBottomMoves']
-
 // nidoran-f im großen PokemonContainer
 
 let url = 'https://pokeapi.co/api/v2/pokemon/';
@@ -48,7 +39,7 @@ let pokemonsIndexBig = [];
 
 let correctedWeight = [];
 
-
+let searchPokemonExists = false;
 
 let pokemonCount = {
     'start': 0,
@@ -60,7 +51,6 @@ async function loadPokemon(actualUrl) {
     let responseAsJson = await response.json();
     let actualImgUrl = responseAsJson['sprites']['front_shiny'];
     actualPokemonImgUrl.push(actualImgUrl);
-    // console.log(responseAsJson);
 }
 
 async function loadPokemonDates(responseAsJson) {
@@ -79,7 +69,7 @@ async function choosePokemon() {
         await loadPokemon(actualUrl);
         await capitalizeFirstLetter(actualPokemon);
         await includeTypes(actualUrl);
-       
+
         pokedex.innerHTML += /*html*/`
         <div class="soloPokemonContainer" id="soloPokemonContainer${pokemonsIndex}" onclick="openPokemonInfo(${pokemonsIndex}, '${actualUrl}', '${pokemonNumber}')" style="background-color: rgb(247,120,107)">
         <div class="soloPokemonHeadlineContainer">
@@ -90,7 +80,7 @@ async function choosePokemon() {
         <div class="pokemonType"><div class="typeBackgroundColor">${actualTypes[0]}</div><div class="typeBackgroundColorTwo" id="typeBackgroundColorTwo${pokemonsIndex}">${setSecondActualType()}</div></div>
         </div>
         </div>` ;
-                                                                                                                        // 'dream-world   .svg'
+        // 'dream-world   .svg'
         await checkSecondActualType(pokemonsIndex);
         await colorOfType(pokemonsIndex);
         actualTypes.splice(0, 2);
@@ -100,7 +90,7 @@ async function choosePokemon() {
 }
 
 function renderReloadAndLoad() {
-    pokemonCount['start'] =  0;
+    pokemonCount['start'] = 0;
     pokemonCount['end'] = 20;
     let loadPokemonButtonId = 'loadPokemonButtonContainerId';
     removeDisplayNoneUniversal(loadPokemonButtonId);
@@ -135,11 +125,11 @@ function setSecondActualType() {
     }
 }
 
-function checkSecondActualType(pokemonsIndex) { 
-   if (actualTypes.length !== 2) {
+function checkSecondActualType(pokemonsIndex) {
+    if (actualTypes.length !== 2) {
         let actualIdSecondTypeBackground = 'typeBackgroundColorTwo' + pokemonsIndex;
         document.getElementById(actualIdSecondTypeBackground).classList.add('d-none');
-   } 
+    }
 }
 
 function colorOfType(pokemonsIndex) {
@@ -169,31 +159,33 @@ function capitalizeFirstLetter(actualPokemon) {
         actualPokemonUsed.splice(0, 1);
         actualPokemonUsed.push(actualPokemonCapitalized);
         return actualPokemonCapitalized;
-    } else { 
-    if (actualPokemon == 'nidoran-f'){
-        let actualPokemonCapitalized = 'Nidoran Female';
-        actualPokemonUsed.splice(0, 1);
-        actualPokemonUsed.push(actualPokemonCapitalized);
-        return actualPokemonCapitalized;
-    }  else {
-    if (actualPokemon == 'nidoran-m'){
-        let actualPokemonCapitalized = 'Nidoran Male';
-        actualPokemonUsed.splice(0, 1);
-        actualPokemonUsed.push(actualPokemonCapitalized);
-        return actualPokemonCapitalized;
+    } else {
+        if (actualPokemon == 'nidoran-f') {
+            let actualPokemonCapitalized = 'Nidoran Female';
+            actualPokemonUsed.splice(0, 1);
+            actualPokemonUsed.push(actualPokemonCapitalized);
+            return actualPokemonCapitalized;
+        } else {
+            if (actualPokemon == 'nidoran-m') {
+                let actualPokemonCapitalized = 'Nidoran Male';
+                actualPokemonUsed.splice(0, 1);
+                actualPokemonUsed.push(actualPokemonCapitalized);
+                return actualPokemonCapitalized;
+            }
+            else {
+                let firstLetter = actualPokemon.charAt(0);
+                let remainingLetters = actualPokemon.substring(1);
+                let firstLetterCapitalized = firstLetter.toUpperCase();
+                let actualPokemonCapitalized = firstLetterCapitalized + remainingLetters;
+                actualPokemonUsed.splice(0, 1);
+                actualPokemonUsed.push(actualPokemonCapitalized);
+                return actualPokemonCapitalized;
+            }
+        }
     }
-    else {
-        let firstLetter = actualPokemon.charAt(0);
-        let remainingLetters = actualPokemon.substring(1);
-        let firstLetterCapitalized = firstLetter.toUpperCase();
-        let actualPokemonCapitalized = firstLetterCapitalized + remainingLetters;
-        actualPokemonUsed.splice(0, 1);
-        actualPokemonUsed.push(actualPokemonCapitalized);
-        return actualPokemonCapitalized;
-    } } }
 }
 
-async function openPokemonInfo (pokemonsIndex, actualUrl, pokemonNumber) {
+async function openPokemonInfo(pokemonsIndex, actualUrl, pokemonNumber) {
     // let audio = new Audio(`https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/'${pokemonsIndex}.ogg`);
     // audio.play();
     let body = document.getElementById('body');
@@ -203,10 +195,11 @@ async function openPokemonInfo (pokemonsIndex, actualUrl, pokemonNumber) {
     let actualPokemon = pokemons[pokemonsIndex];
     let response = await fetch(actualUrl);
     let responseAsJson = await response.json();
+    console.log(responseAsJson, 1)
     await includeTypes(actualUrl);
     await capitalizeFirstLetter(actualPokemon);
     let correctWeight = responseAsJson['weight'];
-    
+
     body.innerHTML = /*html*/`
     <div class="pokemonInfoContainerAndBorder" id="pokemonInfoContainerAndBorder">
         <div class="pokemonInfoContainer"  onclick="dontClose(event)" id="pokemonInfoContainer${pokemonsIndex}">
@@ -221,13 +214,13 @@ async function openPokemonInfo (pokemonsIndex, actualUrl, pokemonNumber) {
             </div>
             <div class="pokemonInfoBottomContainer" id="pokemonInfoBottomContainer">
                 <div class="pokemonInfoBottomHeadlineContainer">
-                    <span class="pokemonInfoBottomAbout pokemonInfoBottomOpened" id="pokemonInfoBottomAbout${pokemonsIndex}" onclick="openAbout('${pokemonsIndex}', '${responseAsJson}')">About</span>
-                    <span class="pokemonInfoBottomBaseStats" id="pokemonInfoBottomBaseStats${pokemonsIndex}" onclick="openBaseStats(${pokemonsIndex})">Base Stats</span>
-                    <span class="pokemonInfoBottomEvolution" id="pokemonInfoBottomEvolution${pokemonsIndex}" onclick="openEvolution(${pokemonsIndex})">Evolution</span>
-                    <span class="pokemonInfoBottomMoves" id="pokemonInfoBottomMoves${pokemonsIndex}" onclick="openMoves(${pokemonsIndex})">Moves</span>
+                    <span class="pokemonInfoBottomAbout pokemonInfoBottomOpened" id="pokemonInfoBottomAbout${pokemonsIndex}" onload="openAbout('${pokemonsIndex}', '${responseAsJson}', '${correctWeight}')" onclick="openAbout('${pokemonsIndex}', '${responseAsJson}', '${correctWeight}')">About</span>
+                    <span class="pokemonInfoBottomBaseStats" id="pokemonInfoBottomBaseStats${pokemonsIndex}" onclick="openBaseStats(${pokemonsIndex}, '${responseAsJson}')">Base Stats</span>
+                    <span class="pokemonInfoBottomEvolution" id="pokemonInfoBottomEvolution${pokemonsIndex}" onclick="openEvolution(${pokemonsIndex}, '${responseAsJson}')">Evolution</span>
+                    <span class="pokemonInfoBottomMoves" id="pokemonInfoBottomMoves${pokemonsIndex}" onclick="openMoves(${pokemonsIndex}, '${actualUrl}')">Moves</span>
                 </div>
-                <div class="wholeIntegratedElementsAndTypesInfoBottomContainer" id="wholeIntegratedElementsAndTypesInfoBottomContainer">
-                    <div class="integratedElementsAndTypesInfoBottomContainer" id="integratedElementsAndTypesInfoBottomContainer">
+                <div class="wholeIntegratedElementsAndTypesInfoBottomContainer" id="aboutContainer${pokemonsIndex}">
+                <div class="integratedElementsAndTypesInfoBottomContainer" id="integratedElementsAndTypesInfoBottomContainer">
                         <div class="typesForIntegratedElementsBottomContainer">
                             <span>Species:</span>
                             <span>Height:</span>
@@ -258,11 +251,14 @@ async function openPokemonInfo (pokemonsIndex, actualUrl, pokemonNumber) {
                         </div>
                     </div>
                 </div>
+                <div class="baseStatsContainer d-none" id="baseStatsContainer${pokemonsIndex}"></div>
+                <div class="evolutionContainer d-none" id="evolutionContainer${pokemonsIndex}"></div>
+                <div class="movesContainer d-none" id="movesContainer${pokemonsIndex}"></div>
             </div>    
         </div> 
     </div>
     `;
-    
+
     await checkSecondActualType(pokemonsIndex);
     await colorOfType2(pokemonsIndex);
     await colorOfLine(pokemonsIndex);
@@ -275,24 +271,30 @@ function correctDates(value) {
     let lengthOfWeight = correctWeightString.length - 1;
     let lastNumber = correctWeightString.charAt(lengthOfWeight);
     let correctWeightLength = correctWeightString.length;
-    if(correctWeightLength === 1){
+    if (correctWeightLength === 1) {
         let remainingNumbers = 0;
         let newValue = remainingNumbers + ',' + lastNumber;
         return newValue;
-    } else{
+    } else {
         let remainingNumbers = correctWeightString.slice(0, lengthOfWeight);
         let newValue = remainingNumbers + ',' + lastNumber;
         return newValue;
     }
-    
+
 }
 
-function capitalizeFirstLetterUniversal(value){
-    let firstLetter = value.charAt(0);
-    let remainingLetters = value.substring(1);
-    let firstLetterCapitalized = firstLetter.toUpperCase();
-    let actualValue = firstLetterCapitalized + remainingLetters;
-    return actualValue;
+function capitalizeFirstLetterUniversal(value) {
+    let words = value.split('-');
+    let capitalizedWords = words.map(word => {
+        if (word.includes('-')) {
+            let parts = word.split('-'); 
+            let capitalizedParts = parts.map(part => part.charAt(0).toUpperCase() + part.slice(1)); 
+            return capitalizedParts.join('-'); 
+        } else {
+            return word.charAt(0).toUpperCase() + word.slice(1); 
+        }
+    });
+    return capitalizedWords.join('-');
 }
 
 function setDisplayNoneUniversal(value) {
@@ -328,7 +330,7 @@ function colorOfLine(pokemonsIndex) {
 }
 
 function checkComma() {
-    if(actualTypes.length !== 1){
+    if (actualTypes.length !== 1) {
         let actualComma = ',';
         return actualComma;
     } else {
@@ -337,79 +339,134 @@ function checkComma() {
     }
 }
 
-function openAbout(pokemonsIndex, responseAsJson) {
-    let container = document.getElementById('wholeIntegratedElementsAndTypesInfoBottomContainer');
-    container.classList.remove('d-none');
-    let actualPokemonInfoBottomAbout = 'pokemonInfoBottomAbout' + pokemonsIndex;
-    let pokemonInfoBottomAbout = document.getElementById(actualPokemonInfoBottomAbout);
-    setPokemonInfoBottomFalse();
-    pokemonInfoBottom[0] = true;
-    removeBottomOpened(pokemonsIndex);
+async function openAbout(pokemonsIndex, responseAsJson, correctWeight) {
+    let pokemonInfoBottomAbout = document.getElementById('pokemonInfoBottomAbout' + pokemonsIndex);
     pokemonInfoBottomAbout.classList.add('pokemonInfoBottomOpened');
-    let actualTypeForBackground = responseAsJson['types'][0]['type']['name'];
-    let actualTypeForBackgroundCapitalized = capitalizeFirstLetterUniversal(actualTypeForBackground);
-    let backgroundColor = typeColors[actualTypes[actualTypeForBackgroundCapitalized]];
-    pokemonInfoBottomAbout.style.textDecorationColor = backgroundColor;
+    let pokemonInfoBottomBaseStats = document.getElementById('pokemonInfoBottomBaseStats' + pokemonsIndex);
+    pokemonInfoBottomBaseStats.classList.remove('pokemonInfoBottomOpened');
+    let pokemonInfoBottomEvolution = document.getElementById('pokemonInfoBottomEvolution' + pokemonsIndex);
+    pokemonInfoBottomEvolution.classList.remove('pokemonInfoBottomOpened');
+    let pokemonInfoBottomMoves = document.getElementById('pokemonInfoBottomMoves' + pokemonsIndex);
+    pokemonInfoBottomMoves.classList.remove('pokemonInfoBottomOpened');
+    let aboutContainer = document.getElementById('aboutContainer' + pokemonsIndex);
+    aboutContainer.classList.remove('d-none');
+    let baseStatsContainer = document.getElementById('baseStatsContainer' + pokemonsIndex); 
+    baseStatsContainer.classList.add('d-none');
+    let evolutionContainer = document.getElementById('evolutionContainer' + pokemonsIndex); 
+    evolutionContainer.classList.add('d-none');
+    let movesContainer = document.getElementById('movesContainer' + pokemonsIndex);
+    movesContainer.classList.add('d-none');  
+
+    // let actualPokemonInfoBottomAbout = 'pokemonInfoBottomAbout' + pokemonsIndex;
+    // let pokemonInfoBottomAbout = document.getElementById(actualPokemonInfoBottomAbout);
+    // setPokemonInfoBottomFalse();
+    // pokemonInfoBottom[0] = true;
+    // removeBottomOpened(pokemonsIndex);
+
+
+    // pokemonInfoBottomAbout.classList.add('pokemonInfoBottomOpened');
+    // let actualTypeForBackground = responseAsJson['types'][0]['type']['name'];
+    // let actualTypeForBackgroundCapitalized = capitalizeFirstLetterUniversal(actualTypeForBackground);
+    // let backgroundColor = typeColors[actualTypes[actualTypeForBackgroundCapitalized]];
+    // pokemonInfoBottomAbout.style.textDecorationColor = backgroundColor;
 }
 
 function openBaseStats(pokemonsIndex) {
-    let container = document.getElementById('wholeIntegratedElementsAndTypesInfoBottomContainer');
-    container.classList.add('d-none');
-    let actualPokemonInfoBottomBaseStats = 'pokemonInfoBottomBaseStats' + pokemonsIndex;
-    let pokemonInfoBottomBaseStats = document.getElementById(actualPokemonInfoBottomBaseStats);
-    let backgroundColor = typeColors[actualTypes[0]];
-    pokemonInfoBottomBaseStats.style.textDecorationColor = backgroundColor;
-    setPokemonInfoBottomFalse();
-    pokemonInfoBottom[1] = true;
-    removeBottomOpened(pokemonsIndex);
+    let pokemonInfoBottomAbout = document.getElementById('pokemonInfoBottomAbout' + pokemonsIndex);
+    pokemonInfoBottomAbout.classList.remove('pokemonInfoBottomOpened');
+    let pokemonInfoBottomBaseStats = document.getElementById('pokemonInfoBottomBaseStats' + pokemonsIndex);
     pokemonInfoBottomBaseStats.classList.add('pokemonInfoBottomOpened');
+    let pokemonInfoBottomEvolution = document.getElementById('pokemonInfoBottomEvolution' + pokemonsIndex);
+    pokemonInfoBottomEvolution.classList.remove('pokemonInfoBottomOpened');
+    let pokemonInfoBottomMoves = document.getElementById('pokemonInfoBottomMoves' + pokemonsIndex);
+    pokemonInfoBottomMoves.classList.remove('pokemonInfoBottomOpened');
+    let aboutContainer = document.getElementById('aboutContainer' + pokemonsIndex);
+    aboutContainer.classList.add('d-none');
+    let baseStatsContainer = document.getElementById('baseStatsContainer' + pokemonsIndex); 
+    baseStatsContainer.classList.remove('d-none');
+    let evolutionContainer = document.getElementById('evolutionContainer' + pokemonsIndex); 
+    evolutionContainer.classList.add('d-none');
+    let movesContainer = document.getElementById('movesContainer' + pokemonsIndex);
+    movesContainer.classList.add('d-none');  
+    
+    // baseStatsContainer = '';
+    // aboutContainer.classList.add('d-none');
+    // baseStatsContainer.classList.remove('d-none');
+    // baseStatsContainer.innerHTML = `
+    // <div class="bar" style="--stat1: 80;"></div>
+    // <div class="bar" style="--stat2: 60;"></div>
+    // <div class="bar" style="--stat3: 90;"></div>
+    // <div class="bar" style="--stat4: 75;"></div>
+    // <div class="bar" style="--stat5: 85;"></div>
+    // `;
+    // let pokemonInfoBottomOpenedId = 'pokemonInfoBottomOpened';
+    // let pokemonInfoBottomOpened = document.getElementById(pokemonInfoBottomOpenedId);
+    // let actualTypeForBackground = responseAsJson['types'][0]['type']['name'];
+    // let actualTypeForBackgroundCapitalized = capitalizeFirstLetterUniversal(actualTypeForBackground);
+    // let backgroundColor = typeColors[actualTypeForBackgroundCapitalized];
+    // pokemonInfoBottomOpened.style.textDecorationColor = backgroundColor;
+    // let actualPokemonInfoBottomBaseStats = document.getElementById('pokemonInfoBottomBaseStats'+ pokemonsIndex);
+    // actualPokemonInfoBottomBaseStats.classList.add('pokemonInfoBottomOpened');
+    // actualPokemonInfoBottomBaseStats.classList.remove('pokemonInfoBottomBaseStats'+ pokemonsIndex);
+
 }
 
 function openEvolution(pokemonsIndex) {
-    let container = document.getElementById('wholeIntegratedElementsAndTypesInfoBottomContainer');
-    container.classList.add('d-none');
-    let actualPokemonInfoBottomEvolution = 'pokemonInfoBottomEvolution' + pokemonsIndex;
-    let pokemonInfoBottomEvolution = document.getElementById(actualPokemonInfoBottomEvolution);
-    let backgroundColor = typeColors[actualTypes[0]];
-    pokemonInfoBottomEvolution.style.textDecorationColor = backgroundColor;
-    setPokemonInfoBottomFalse();
-    pokemonInfoBottom[2] = true;
-    removeBottomOpened(pokemonsIndex);
+    let pokemonInfoBottomAbout = document.getElementById('pokemonInfoBottomAbout' + pokemonsIndex);
+    pokemonInfoBottomAbout.classList.remove('pokemonInfoBottomOpened');
+    let pokemonInfoBottomBaseStats = document.getElementById('pokemonInfoBottomBaseStats' + pokemonsIndex);
+    pokemonInfoBottomBaseStats.classList.remove('pokemonInfoBottomOpened');
+    let pokemonInfoBottomEvolution = document.getElementById('pokemonInfoBottomEvolution' + pokemonsIndex);
     pokemonInfoBottomEvolution.classList.add('pokemonInfoBottomOpened');
+    let pokemonInfoBottomMoves = document.getElementById('pokemonInfoBottomMoves' + pokemonsIndex);
+    pokemonInfoBottomMoves.classList.remove('pokemonInfoBottomOpened');
+    let aboutContainer = document.getElementById('aboutContainer' + pokemonsIndex);
+    aboutContainer.classList.add('d-none');
+    let baseStatsContainer = document.getElementById('baseStatsContainer' + pokemonsIndex); 
+    baseStatsContainer.classList.add('d-none');
+    let evolutionContainer = document.getElementById('evolutionContainer' + pokemonsIndex); 
+    evolutionContainer.classList.remove('d-none');
+    let movesContainer = document.getElementById('movesContainer' + pokemonsIndex);
+    movesContainer.classList.add('d-none');  
 }
 
-function openMoves(pokemonsIndex) {
-    let container = document.getElementById('wholeIntegratedElementsAndTypesInfoBottomContainer');
-    container.classList.add('d-none');
-    let actualPokemonInfoBottomMoves = 'pokemonInfoBottomMoves' + pokemonsIndex;
-    let pokemonInfoBottomMoves = document.getElementById(actualPokemonInfoBottomMoves);
-    let backgroundColor = typeColors[actualTypes[0]];
-    pokemonInfoBottomMoves.style.textDecorationColor = backgroundColor;
-    setPokemonInfoBottomFalse();
-    pokemonInfoBottom[3] = true;
-    removeBottomOpened(pokemonsIndex);
+async function openMoves(pokemonsIndex, actualUrl) {
+    let pokemonInfoBottomAbout = document.getElementById('pokemonInfoBottomAbout' + pokemonsIndex);
+    pokemonInfoBottomAbout.classList.remove('pokemonInfoBottomOpened');
+    let pokemonInfoBottomBaseStats = document.getElementById('pokemonInfoBottomBaseStats' + pokemonsIndex);
+    pokemonInfoBottomBaseStats.classList.remove('pokemonInfoBottomOpened');
+    let pokemonInfoBottomEvolution = document.getElementById('pokemonInfoBottomEvolution' + pokemonsIndex);
+    pokemonInfoBottomEvolution.classList.remove('pokemonInfoBottomOpened');
+    let pokemonInfoBottomMoves = document.getElementById('pokemonInfoBottomMoves' + pokemonsIndex);
     pokemonInfoBottomMoves.classList.add('pokemonInfoBottomOpened');
-}
-
-function setPokemonInfoBottomFalse() {
-    for (let pokemonInfoFalseIndex = 0; pokemonInfoFalseIndex < pokemonInfoBottom.length; pokemonInfoFalseIndex++) {
-        pokemonInfoBottom[pokemonInfoFalseIndex] = false;
+    let aboutContainer = document.getElementById('aboutContainer' + pokemonsIndex);
+    aboutContainer.classList.add('d-none');
+    let baseStatsContainer = document.getElementById('baseStatsContainer' + pokemonsIndex); 
+    baseStatsContainer.classList.add('d-none');
+    let evolutionContainer = document.getElementById('evolutionContainer' + pokemonsIndex); 
+    evolutionContainer.classList.add('d-none');
+    let movesContainer = document.getElementById('movesContainer' + pokemonsIndex);
+    movesContainer.classList.remove('d-none');  
+    let response = await fetch(actualUrl);
+    let responseAsJson = await response.json();
+    let movesArray = responseAsJson['moves'];
+   
+    // for (let movesIndex = 0; movesIndex < array.length; movesIndex++) {
+    //     const element = array[movesIndex];
+        
+    // }
+    for (let movesIndex = 0; movesIndex < movesArray.length; movesIndex++) {
+        const actualMove = movesArray[movesIndex]['move']['name'];
+         movesContainer.innerHTML += `
+         <span class="singleMoves">${capitalizeFirstLetterUniversal(actualMove)}</span> 
+    `
     }
-}
-
-function removeBottomOpened(pokemonsIndex) {
-    for (let pokemonInfoBottomIndex = 0; pokemonInfoBottomIndex < pokemonInfoBottomForLoop.length; pokemonInfoBottomIndex++) {
-        let actualPokemonInfoBottomOpened = pokemonInfoBottomForLoop[pokemonInfoBottomIndex];
-        if (actualPokemonInfoBottomOpened !== true) {
-            let pokemonInfoBottomOpenedForId = pokemonInfoBottomForLoop[pokemonInfoBottomIndex] + pokemonsIndex;
-            let getElementByIdPokemonInfoBottom = document.getElementById(pokemonInfoBottomOpenedForId);
-            getElementByIdPokemonInfoBottom.classList.remove('pokemonInfoBottomOpened');
-        }
-    }
+    
+    ;
 }
 
 async function showMorePokemon() {
-    
+
     if (pokemonCount['start'] !== 140) {
         pokemonCount['start'] += 20;
         pokemonCount['end'] += 20;
@@ -417,88 +474,122 @@ async function showMorePokemon() {
         pokemonCount['start'] += 20;
         pokemonCount['end'] += 11;
     }
-    if (pokemonCount['end'] == 151) {
+    if (pokemonCount['end'] === 151) {
         let showMorePokemonButton = document.getElementById('showMorePokemonButton');
-        showMorePokemonButton.classList.add('d-none'); 
+        showMorePokemonButton.classList.add('d-none');
     }
     await setTimeout(choosePokemon(), 2000);
 }
 
-async function searchPokemon(){
+async function searchPokemon() {
     let searchedPokemon = document.getElementById('pokemonSearchField').value.toLowerCase();
-    let searchedPokemonString = String(searchedPokemon);
-    let pokemonsIndex = pokemons.indexOf(searchedPokemonString);
-    let pokemonNumber = String(pokemonsIndex + 1).padStart(3, '0');
-    let actualUrl = url + pokemons[pokemonsIndex];
-    let response = await fetch(actualUrl);
-    let responseAsJson = await response.json();
 
-    if(pokemonsIndex >= 0) {
-        let firstActualType = setFirstActualTypeSearch(responseAsJson);
-        let actualId = 'soloPokemonContainerSearch' + pokemonsIndex;
-        const actualPokemon = pokemons[pokemonsIndex];
-        let pokedex = document.getElementById('pokedex');
+    if (searchedPokemon.length > 1) {
         pokedex.innerHTML = '';
-        pokedex.innerHTML += /*html*/`
-        <div class="soloPokemonContainerSearch" id='${actualId}' onclick="openPokemonInfo(${pokemonsIndex}, '${actualUrl}', '${pokemonNumber}')" style="background-color: rgb(247,120,107)">
-        <div class="soloPokemonHeadlineContainer">
-        <span> ${capitalizeFirstLetterUniversal(actualPokemon)} </span> <span class="numberOfSinglePokemon">#${pokemonNumber}</span>
-        </div>
-        <div class="pokemonImageAndTypeContainer">  
-        <img class="pokemonImage" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonsIndex + 1}.png">
-        <div class="pokemonType"><div class="typeBackgroundColor">${capitalizeFirstLetterUniversal(firstActualType)}</div><div class="typeBackgroundColorTwoSearch" id="typeBackgroundColorTwoSearch${pokemonsIndex}">${setSecondActualTypeSearch(responseAsJson)}</div></div>
-        </div>
-        </div>` ; 
-        setRightBackgroundColorUniversal(firstActualType, actualId);
-        let loadPokemonButtonId = 'loadPokemonButtonContainerId';
-        setDisplayNoneUniversal(loadPokemonButtonId);
-        let reloadButton = 'reloadPokemon';
-        removeDisplayNoneUniversal(reloadButton);
-        checkSecondActualTypeSearch(pokemonsIndex, responseAsJson);
+    
+        for (let searchIndex = 0; searchIndex < pokemons.length; searchIndex++) {
+            if (pokemons[searchIndex].includes(searchedPokemon)) {
+                let actualId = 'soloPokemonContainerSearch' + searchIndex;
+                let actualUrl = url + pokemons[searchIndex];
+                let response = await fetch(actualUrl);
+                let responseAsJson = await response.json();
+                let pokemonNumber = String(searchIndex + 1).padStart(3, '0');
+                let actualPokemon = pokemons[searchIndex];
+                let firstActualType = responseAsJson['types'][0]['type']['name'];
+                let firstActualTypeCapitalized = capitalizeFirstLetterUniversal(firstActualType);
+                pokedex.innerHTML += /*html*/`
+            <div class="soloPokemonContainerSearch" id='${actualId}' onclick="openPokemonInfo(${searchIndex}, '${actualUrl}', '${pokemonNumber}')" style="background-color: rgb(247,120,107)">
+            <div class="soloPokemonHeadlineContainer">
+            <span> ${capitalizeFirstLetterUniversal(actualPokemon)} </span> <span class="numberOfSinglePokemon">#${pokemonNumber}</span>
+            </div>
+            <div class="pokemonImageAndTypeContainer">  
+            <img class="pokemonImage" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${searchIndex + 1}.png">
+            <div class="pokemonType"><div class="typeBackgroundColor">${firstActualTypeCapitalized}</div><div class="typeBackgroundColorTwoSearch" id="typeBackgroundColorTwoSearch${searchIndex}">${setSecondActualTypeSearch(responseAsJson, searchIndex)}</div></div>
+            </div>
+            </div>
+            ` ;
+                checkSecondActualTypeSearch(searchIndex, responseAsJson);
+                setRightBackgroundColorUniversal(firstActualTypeCapitalized, actualId);
+                let loadPokemonButtonId = 'loadPokemonButtonContainerId';
+                setDisplayNoneUniversal(loadPokemonButtonId);               
+            };
+
         }
-        // else{
-        //     let pokedex = document.getElementById('pokedex');
-        // pokedex.innerHTML = '';
-        // pokedex.innerHTML += /*html*/`
-        // <h2>No Pokemon Found</h2>
-        // `
-        // let loadPokemonButtonId = 'loadPokemonButtonContainerId';
-        // setDisplayNoneUniversal(loadPokemonButtonId);
-        // let reloadButton = 'reloadPokemon';
-        // removeDisplayNoneUniversal(reloadButton);
-        // }
+        checkForNoPokemon(searchedPokemon);
+        
+    };
+   
+     if (searchedPokemon.trim() === '') {
+        renderReloadAndLoad();
     }
+}
 
-    function setFirstActualTypeSearch(responseAsJson) {
-        let actualType = responseAsJson['types'][0]['type']['name'];
-        return actualType;
-    }
-
-    function setSecondActualTypeSearch(responseAsJson) {
-        let actualTypeSearch = responseAsJson['types'][0]['type']['name'];
-        if (actualTypeSearch.length == 2) {
-            let actualType = responseAsJson['types'][0]['type']['name'];
-            capitalizeFirstLetterUniversal(actualType);
-            return actualType;
-        } else {
-            let nothing = '';
-            return nothing;
-        }
-    }
-
-    function checkSecondActualTypeSearch(pokemonsIndex, responseAsJson) {
-        let actualTypeSearch = responseAsJson['types'][0]['type']['name'];
-        if (actualTypeSearch.length !== 2) {
-            let actualId = 'typeBackgroundColorTwoSearch' + pokemonsIndex;
-            setDisplayNoneUniversal(actualId);
+function checkForNoPokemon (searchedPokemon){
+    searchPokemonExists = false;
+    for (let searchIndex = 0; searchIndex < pokemons.length; searchIndex++) {
+        if(pokemons[searchIndex].includes(searchedPokemon)) {
+            searchPokemonExists = true;
+            break;
+        }};          
+        if (searchPokemonExists === false) {
+            pokedex.innerHTML = /*html*/ `
+            <div class="noPokemonFoundContainer">
+            <h2 class="noPokemonFoundHeadline">No Pokemon found. Please try again.</h2>
+            <img src="img/pinkPokemon.png" alt="pink Pokemon" class="pinkPokemonImg">
+            </div>
+            `;
         } 
-    }
+}
 
-    function setRightBackgroundColorUniversal(value, actualId) {
-        let newValue = capitalizeFirstLetterUniversal(value);
-        let backgroundColorSearch = typeColors[newValue];
-        let actualIdToUse = document.getElementById(actualId);
-        if (backgroundColorSearch) {
-            actualIdToUse.style.backgroundColor = backgroundColorSearch;
+function setFirstActualTypeSearch(responseAsJson) {
+    let actualType = responseAsJson['types'][0]['type']['name'];
+    return actualType;
+}
+
+function setSecondActualTypeSearch(responseAsJson, searchIndex) {
+    let actualTypeSearch = responseAsJson['types'];
+    if (actualTypeSearch.length == 2) {
+        let actualType = responseAsJson['types'][1]['type']['name'];
+        return capitalizeFirstLetterUniversal(actualType);;
+    } else {
+        let nothing = '';
+        return nothing;
+    }
+}
+
+function checkSecondActualTypeSearch(pokemonsIndex, responseAsJson) {
+    let actualTypeSearch = responseAsJson['types'][0]['type']['name'];
+    if (actualTypeSearch.length !== 2) {
+        let actualId = 'typeBackgroundColorTwoSearch' + pokemonsIndex;
+        setDisplayNoneUniversal(actualId);
+    }
+}
+
+function setRightBackgroundColorUniversal(value, actualId) {
+    let newValue = capitalizeFirstLetterUniversal(value);
+    let backgroundColorSearch = typeColors[newValue];
+    let actualIdToUse = document.getElementById(actualId);
+    if (backgroundColorSearch) {
+        actualIdToUse.style.backgroundColor = backgroundColorSearch;
+    }
+}
+
+function liveSearch() {
+    var input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById('searchInput');
+    filter = input.value.toUpperCase();
+    searchResults = document.getElementById("searchResults");
+    searchResults.innerHTML = ""; // Clear previous results
+    // Hier müsstest du die Ergebnisse aus einer Datenquelle laden,
+    // z.B. einer Liste von Elementen
+    var items = ['Apple', 'Banana', 'Orange', 'Pear', 'Pineapple'];
+    for (i = 0; i < items.length; i++) {
+        if (items[i].toUpperCase().indexOf(filter) > -1) {
+            var result = document.createElement("div");
+            result.textContent = items[i];
+            searchResults.appendChild(result);
         }
     }
+}
+
+

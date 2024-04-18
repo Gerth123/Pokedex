@@ -92,6 +92,21 @@ h1 {
     z-index: 1;
 }
 
+.noPokemonFoundContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.noPokemonFoundHeadline {
+    color: black;
+}
+
+.pinkPokemonImg {
+    height: 10vh;
+}
+
 .typeBackgroundColorTwoSearch {
     background-color: rgba(255, 255, 255, 0.4);
     border-radius: 30px;
@@ -219,7 +234,7 @@ h1 {
 }
 
 .showMorePokemonButton:hover {
-    transition: 1s ease-in-out;
+    transition: 0.5s ease-in-out;
     background: rgb(237,85,100);
     /* background: linear-gradient(to bottom, red 50%, white 50%); */
 }
@@ -426,6 +441,29 @@ h1 {
     height: 100%;
 }
 
+.movesContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 0px 10px;
+    overflow: auto;
+    padding-bottom: 20px;
+    padding-top: 10px;
+   
+}
+
+.singleMoves {
+    display: flex; 
+    background-color: rgba(255, 255, 255, 0.4);
+    height: 15px;
+    color: black;
+    border-radius: 10px;
+    padding: 8px 20px;
+}
+
 .integratedElementsAndTypesInfoBottomContainer {
     display: flex;
     justify-content: space-evenly;
@@ -478,3 +516,23 @@ h1 {
     padding-left: 1.5px;
     margin-right: 1.5px;
 }
+
+.baseStatsContainer {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    height: 200px;
+    margin: 20px;
+}
+
+.bar {
+    height: 30px;
+    margin-bottom: 5px;
+    background-color: #3498db; /* Standardfarbe */
+}
+
+.bar:nth-child(1) { background-color: var(--color1, #3498db); width: var(--stat1); }
+.bar:nth-child(2) { background-color: var(--color2, #2ecc71); width: var(--stat2); }
+.bar:nth-child(3) { background-color: var(--color3, #f1c40f); width: var(--stat3); }
+.bar:nth-child(4) { background-color: var(--color4, #e67e22); width: var(--stat4); }
+.bar:nth-child(5) { background-color: var(--color5, #e74c3c); width: var(--stat5); }
