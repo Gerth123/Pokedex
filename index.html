@@ -4,8 +4,12 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Pokedex</title>
     <script src="script.js"></script>
+    <script src="universalFunctions.js"></script>
+    <script src="template.js"></script>
+    <script src="arrays.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body onload="choosePokemon()">
@@ -14,7 +18,7 @@
       onclick="closePokemonInfo()"
       class="soloPokemonContainerBig d-none"
     ></div>
-    <div class="wholePokedexContainer">
+    <div class="wholePokedexContainer" id="wholePokedexContainer">
       <div class="pokedexHeadlineAndSearchFieldContainer">
         <div class="headlineAndPokeballPictureContainer">
           <h1>Pokedex</h1>
@@ -25,7 +29,7 @@
       <div id="pokedex"></div>
     </div>
 
-    <div class="infoContainer">
+    <div class="infoContainer" id="infoContainer">
       <img id="pokemonImage" src="" alt="" />
     </div>
     <div class="showMorePokemonButtonContainer" id="loadPokemonButtonContainerId">
@@ -36,9 +40,6 @@
       >
         Load Pokemon
       </button>
-    </div>
-    <div class="showMorePokemonButtonContainer">
-      <button onclick="renderReloadAndLoad()" class="reloadPokemonButton d-none" id="reloadPokemon">Reload</button>
     </div>
   </body>
 </html>
