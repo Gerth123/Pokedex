@@ -12,6 +12,7 @@ function choosePokemonTemplate(pokemonsIndex, actualUrl, pokemonNumber, actualPo
     return template;
  }
 
+
 async function openPokemonInfoTemplate(pokemonsIndex, actualPokemon, responseAsJson, correctWeight, pokemonNumber, actualUrl) {
     let template = /*html*/`
      <div class="pokemonInfoContainerAndBorder" id="pokemonInfoContainerAndBorder">
@@ -62,3 +63,64 @@ async function openPokemonInfoTemplate(pokemonsIndex, actualPokemon, responseAsJ
     return template;
  }
 
+
+function firstEvolutionTemplate(pokemonNumber) {
+    let template = `
+            <div class="pokemonInfoPokemonImageEvolutionContainer">
+            <img class="pokemonInfoPokemonImageEvolution" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemonNumber}.svg">
+            <span>${capitalizeFirstLetterUniversal(pokemons[pokemonNumber - 1])}</span>
+            </div>
+        `;
+    return template;        
+}
+
+
+ function openEeveeTemplate(pokemonNumber) { 
+    let template = `<div class="pokemonInfoPokemonImageEvolutionContainer">
+            <img class="pokemonInfoPokemonImageEvolution" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemonNumber + 1}.svg">
+            <span>${capitalizeFirstLetterUniversal(pokemons[pokemonNumber])}</span>
+            </div>
+            <div class="pokemonInfoPokemonImageEvolutionContainer">
+            <img class="pokemonInfoPokemonImageEvolution" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemonNumber + 2}.svg">
+            <span>${capitalizeFirstLetterUniversal(pokemons[pokemonNumber + 1])}</span>
+            </div>
+        `;
+    return template;
+}
+
+
+function secondEvolutionTemplate(pokemonNumber, secondPokemonNumber) {
+    let template = /*html*/`	
+            <div class="pokemonInfoPokemonImageEvolutionContainer">
+            <img class="pokemonInfoPokemonImageEvolution" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${secondPokemonNumber}.svg">
+            <span>${capitalizeFirstLetterUniversal(pokemons[pokemonNumber])}</span>
+            </div>
+            `;
+    return template;
+}
+
+
+function noEvolutionTemplate() {
+    let template = `<div class="pokemonInfoNoEvolutionContainer">
+        <img class="noEvolutionImg" src="img/noEvolution.png" alt="no evolution">
+        <h2>End evolution!</h2>
+        </div>
+        `;
+    return template;
+}
+
+
+function searchPokemonTemplate(searchIndex, actualUrl, pokemonNumber, actualPokemon, firstActualTypeCapitalized, actualId, responseAsJson) {
+    let template = /*html*/`
+            <div class="soloPokemonContainerSearch" id='${actualId}' onclick="openPokemonInfo(${searchIndex}, '${actualUrl}', '${pokemonNumber}')" style="background-color: rgb(247,120,107)">
+            <div class="soloPokemonHeadlineContainer">
+            <span> ${capitalizeFirstLetter(actualPokemon)} </span> <span class="numberOfSinglePokemon">#${pokemonNumber}</span>
+            </div>
+            <div class="pokemonImageAndTypeContainer">  
+            <img class="pokemonImage" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${searchIndex + 1}.png">
+            <div class="pokemonType"><div class="typeBackgroundColor">${firstActualTypeCapitalized}</div><div class="typeBackgroundColorTwoSearch" id="typeBackgroundColorTwoSearch${searchIndex}">${setSecondActualTypeSearch(responseAsJson, searchIndex)}</div></div>
+            </div>
+            </div>
+            ` ;
+    return template;
+}

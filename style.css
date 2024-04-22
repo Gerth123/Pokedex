@@ -59,6 +59,7 @@ h1 {
     justify-content: center;
     align-items: center;
     height: 32px;
+    border: unset;
   }
 
 .search-input:focus {
@@ -581,14 +582,15 @@ h1 {
 .baseStatsContainer {
     display: flex;
     flex-direction: column;
-    width: 100%;
-    height: 100%;
+    width: auto;
+    height: 80%;
     justify-content: center;
     align-items: center;
 }
 
 #myChart {
     display: flex !important;
+    width: auto !important;
     height: 35vh !important;
 }
 
@@ -623,6 +625,10 @@ h1 {
     .pokeball {
         height: 12vh;
     }
+
+    #myChart {
+        height: 30vh !important;
+    }
 }
 
 @media (max-width: 600px) {
@@ -646,13 +652,9 @@ h1 {
 }
 
 @media (max-width: 440px) {
-    .pokemonInfoContainerAndBorder {
-        justify-content: unset;
-        padding-top: 8vh;
-    }
-
     .pokemonInfoContainer {
         height: 80vh;
+        width: 100%;
     }
 
     .pokemonInfoHeadlineAndNumberContainer {
@@ -680,12 +682,44 @@ h1 {
         font-size: small;
     }
 
+    .typeBackgroundColor {
+        font-size: 0.6em;
+        height: 20px;
+        width: 70px;
+    }
+
+    .typeBackgroundColorTwo {
+        font-size: 0.6em;
+        height: 20px;
+        width: 70px;
+    }
+
+    .pokemonInfoBottomAbout {
+        font-size: 0.9em;
+    }
+
+    .pokemonInfoBottomBaseStats {    
+        font-size: 0.9em;    
+    }   
+
+    .pokemonInfoBottomEvolution {
+        font-size: 0.9em;
+    }
+
+    .pokemonInfoBottomMoves {
+        font-size: 0.9em;
+    }
+
+    .pokemonInfoHeadline {
+        font-size: 1.5em;
+    }
+
     .closePokemonAndNumberContainer {
         gap: 40px;
     }
 
     .numberOfPokemonInfo {
-        font-size: 25px;
+        font-size: 1.4em;
     }
 
     .pokemonInfoTypeContainer {
@@ -698,7 +732,36 @@ h1 {
     }
 
     #myChart {
-        height: auto !important;
+        height: 25vh !important;
+    }
+
+    .pokemonInfoPokemonImage {
+        height: 17vh;
+    }
+}
+
+@media (max-width: 350px) {
+    #myChart {
+        margin-right: -20px !important;
+        height: 20vh !important;
+    }
+}
+
+@media (max-width: 330px) {
+    #myChart {
+        margin-right: -30px !important;
+    }
+}
+
+@media (max-width: 317px) {
+    #myChart {
+        margin-right: -40px !important;
+    }
+}
+
+@media (max-width: 309px) {
+    #myChart {
+        margin-right: -50px !important;
     }
 }
 

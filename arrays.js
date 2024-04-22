@@ -28,8 +28,6 @@ let typeColors = {
 
 let url = 'https://pokeapi.co/api/v2/pokemon/';
 
-let currentPokemon;
-
 let actualPokemonUsed = [];
 
 let actualPokemonImgUrl = [];
@@ -57,4 +55,6 @@ let pokemonInfoBottomStatus = {
 let pokemonInfoBottom = ['pokemonInfoBottomAbout', 'pokemonInfoBottomBaseStats', 'pokemonInfoBottomEvolution', 'pokemonInfoBottomMoves']
 
 let pokemonInfoContainer = ['aboutContainer', 'baseStatsContainer', 'evolutionContainer', 'movesContainer']
+
+let choosePokemonLoad = false;
     
