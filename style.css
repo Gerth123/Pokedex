@@ -292,11 +292,23 @@ h1 {
     width: 100%;
     padding-top: 0;
     align-items: center;
-    z-index: 9;
+    position: fixed;
 }
 
 .pokemonInfoContainerAndBorder:hover {
     cursor: pointer;
+}
+
+.darkBackground {
+    background-color: rgba(0, 0, 0, 0.5);
+    height: 100vh;
+    position: fixed;
+    width: 100%;
+    z-index: 9;
+}
+
+.notScrollable {
+    overflow: hidden !important;
 }
 
 .pokemonInfoContainer {
@@ -373,13 +385,29 @@ h1 {
 .pokemonInfoPokemonImageContainer {
     width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: flex-end;
 }
 
 .pokemonInfoPokemonImage {
     height: 30vh;
     margin-bottom: -6vh;
+}
+
+.arrowImgLeft {
+    height: 8vh;
+}
+
+.arrowImgLeft:hover {
+    cursor: pointer;
+}
+
+.arrowImgRight {
+    height: 8vh;
+}
+
+.arrowImgRight:hover {
+    cursor: pointer;
 }
 
 .pokemonInfoBottomContainer {
@@ -649,6 +677,10 @@ h1 {
     .movesContainer {
         height: 35vh;
     }
+
+    .pokemonInfoBottomContainer {
+        height: 50vh;
+    }
 }
 
 @media (max-width: 440px) {
@@ -666,20 +698,24 @@ h1 {
         padding: 0 10px;
     }
 
+    .soloPokemonHeadlineContainer {
+        font-size: 1.5em;
+    }
+
     .integratedElementsAndTypesInfoBottomContainer {
         width: 90%;
     }
 
     span {
-        font-size: small;
+        font-size: 0.8em;
     }
 
     h1 {
-        font-size: small;
+        font-size: 1.5em;
     }
 
     h2 {
-        font-size: small;
+        font-size: 1.2em;
     }
 
     .typeBackgroundColor {
@@ -715,7 +751,7 @@ h1 {
     }
 
     .closePokemonAndNumberContainer {
-        gap: 40px;
+        gap: 6px;
     }
 
     .numberOfPokemonInfo {
@@ -737,6 +773,16 @@ h1 {
 
     .pokemonInfoPokemonImage {
         height: 17vh;
+        max-width: 160px;
+    }
+
+    .pokemonImage {
+        height: 15vh;
+    }
+
+    .singleMoves {
+        font-size: 0.8em !important;
+        padding: 6px 15px;
     }
 }
 

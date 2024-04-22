@@ -5,6 +5,7 @@ let pokemons = [
     "starmie", "mr-mime", "scyther", "jynx", "electabuzz", "magmar", "pinsir", "tauros", "magikarp", "gyarados", "lapras", "ditto", "eevee", "vaporeon", "jolteon", "flareon", "porygon", "omanyte", "omastar", "kabuto", "kabutops", "aerodactyl", "snorlax", "articuno", "zapdos", "moltres", "dratini", "dragonair", "dragonite", "mewtwo", "mew",
 ];
 
+
 let pokemonsWithEvolution = ["bulbasaur", "ivysaur", "charmander", "charmeleon", "squirtle", "wartortle", "caterpie", "metapod", "weedle", "kakuna", "pidgey", "pidgeotto", "rattata", "spearow", "ekans", "pikachu", "sandshrew", "nidoran-f", "nidorina", "nidoran-m", "nidorino", "clefairy", "vulpix", "jigglypuff", "zubat", "oddish", "gloom", "paras", "venonat", "diglett", "meowth", "psyduck", "mankey", "growlithe", "poliwag", "poliwhirl", "abra", "kadabra", "machop", "machoke", "bellsprout", "weepinbell", "tentacool", "geodude", "graveler", "ponyta", "slowpoke", "magnemite", "farfetchd", "doduo", "seel", "grimer", "shellder", "gastly", "haunter", "onix", "drowzee", "krabby", "voltorb", "exeggcute", "cubone", "lickitung", "koffing", "rhyhorn", "chansey", "tangela", "horsea", "goldeen", "staryu", "scyther", "jynx", "electabuzz", "magmar", "pinsir", "tauros", "magikarp", "eevee", "porygon", "omanyte", "kabuto", "aerodactyl", "snorlax", "dratini"];
 
 
@@ -26,24 +27,33 @@ let typeColors = {
     'Ice': 'rgb(151, 217, 240)',
 };
 
+
 let url = 'https://pokeapi.co/api/v2/pokemon/';
+
 
 let actualPokemonUsed = [];
 
+
 let actualPokemonImgUrl = [];
+
 
 let actualTypes = [];
 
+
 let pokemonsIndexBig = [];
+
 
 let correctedWeight = [];
 
+
 let searchPokemonExists = false;
+
 
 let pokemonCount = {
     'start': 0,
     'end': 20,
 }
+
 
 let pokemonInfoBottomStatus = {
     'pokemonInfoBottomAbout': true,
@@ -52,9 +62,11 @@ let pokemonInfoBottomStatus = {
     'pokemonInfoBottomMoves': false,
 }
 
+
 let pokemonInfoBottom = ['pokemonInfoBottomAbout', 'pokemonInfoBottomBaseStats', 'pokemonInfoBottomEvolution', 'pokemonInfoBottomMoves']
+
 
 let pokemonInfoContainer = ['aboutContainer', 'baseStatsContainer', 'evolutionContainer', 'movesContainer']
 
+
 let choosePokemonLoad = false;
-    
